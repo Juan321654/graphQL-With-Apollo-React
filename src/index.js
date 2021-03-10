@@ -13,6 +13,7 @@ import {
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
+    // https://api.mocki.io/playground?endpoint=https://api.mocki.io/v1/44cb3920
     uri: 'https://api.mocki.io/v1/44cb3920'
   })
 })
