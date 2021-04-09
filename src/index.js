@@ -3,28 +3,34 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-  ApolloClient,
-  ApolloProvider,
-  HttpLink,
-  InMemoryCache
-} from '@apollo/client'
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    // https://api.mocki.io/playground?endpoint=https://api.mocki.io/v1/44cb3920
-    uri: 'https://api.mocki.io/v1/44cb3920'
+  uri: 'https://48p1r2roz4.sse.codesandbox.io',
+  cache: new InMemoryCache()
+});
+
+client
+  .query({
+    query: gql`
+      query GetRates {
+        rates(currency: "USD") {
+          currency
+        }
+      }
+    `
   })
-})
+  .then(result => console.log(result));
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <ApolloProvider client={client}>
       <App />
-    </React.StrictMode>
-  </ApolloProvider>,
-    document.getElementById('root')
+    </ApolloProvider>,
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
